@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card-wrapper">
+            <div class="card-glow"></div>
+            <div class="card">
+                <div class="icon-wrapper">
+                    <div class="icon-glow"></div>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                
+                <h1>LeetCode Tracker</h1>
+                <p class="subtitle">Connect your LeetCode profile with Telegram</p>
+
+                <form id="leetcodeForm">
+                    <div class="form-group">
+                        <label for="username">LeetCode Username</label>
+                        <div class="input-wrapper">
+                            <div class="input-glow"></div>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                placeholder="Enter your username"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="message success hidden">
+                        Successfully sent to Telegram!
+                    </div>
+                    <div class="message error hidden">
+                        Please enter a LeetCode username
+                    </div>
+
+                    <div class="button-wrapper">
+                        <div class="button-glow"></div>
+                        <button type="submit" id="submitBtn">
+                            <svg class="send-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m22 2-7 20-4-9-9-4Z"></path>
+                                <path d="M22 2 11 13"></path>
+                            </svg>
+                            <span>Connect</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <p class="footer">
+            Track your LeetCode progress through Telegram notifications
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('leetcodeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.querySelector('.message.success');
+            const errorMsg = document.querySelector('.message.error');
+            successMsg.classList.add('hidden');
+            errorMsg.classList.add('hidden');
+            
+            if (!username) {
+                errorMsg.textContent = 'Please enter a LeetCode username';
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            
+            try {
+                // Hardcoded chatId
+                const chatId = "6344734804"; // Replace with your actual chatId
+
+                const response = await fetch('/start-tracking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, chatId }) // Include hardcoded chatId
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    successMsg.textContent = 'Successfully connected! You will receive updates on Telegram.';
+                    successMsg.classList.remove('hidden');
+                    document.getElementById('username').value = '';
+                } else {
+                    throw new Error(data.message || 'Failed to connect');
+                }
+            } catch (error) {
+                errorMsg.textContent = error.message || 'Failed to connect. Please try again.';
+                errorMsg.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

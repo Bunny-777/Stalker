@@ -1,0 +1,243 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    background-color: black;
+    background-image: radial-gradient(circle at 50% 50%, rgba(37, 38, 43, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%);
+    background-size: 200% 200%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.container {
+    width: 100%;
+    max-width: 28rem;
+}
+
+/* Card styles */
+.card-wrapper {
+    position: relative;
+}
+
+.card-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));
+    border-radius: 1rem;
+    filter: blur(1rem);
+    opacity: 0.2;
+    animation: pulse 2s infinite;
+}
+
+.card {
+    position: relative;
+    background-color: rgb(24, 24, 27);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgb(39, 39, 42);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Icon styles */
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.icon-glow {
+    position: absolute;
+    inset: -1.5rem;
+    background: radial-gradient(circle at center, rgb(99, 102, 241) 0%, transparent 70%);
+    filter: blur(1rem);
+    opacity: 0.4;
+    animation: iconPulse 2s infinite;
+}
+
+.icon {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    color: rgb(129, 140, 248);
+    z-index: 1;
+    filter: drop-shadow(0 0 10px rgba(129, 140, 248, 0.5));
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Typography */
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+}
+
+.subtitle {
+    color: rgb(161, 161, 170);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgb(212, 212, 216);
+    margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-glow {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));
+    border-radius: 0.5rem;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+}
+
+input {
+    position: relative;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgb(39, 39, 42);
+    border: 1px solid rgb(63, 63, 70);
+    border-radius: 0.5rem;
+    color: white;
+    outline: none;
+    transition: all 0.2s;
+}
+
+input::placeholder {
+    color: rgb(113, 113, 122);
+}
+
+input:focus {
+    border-color: rgb(99, 102, 241);
+}
+
+.input-wrapper:hover .input-glow {
+    opacity: 0.3;
+}
+
+/* Button styles */
+.button-wrapper {
+    position: relative;
+    margin-top: 1.5rem;
+}
+
+.button-glow {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(to right, rgb(99, 102, 241), rgb(168, 85, 247));
+    border-radius: 0.5rem;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+
+button {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    background-color: rgb(39, 39, 42);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: rgb(63, 63, 70);
+}
+
+button:hover + .button-glow {
+    opacity: 0.5;
+}
+
+.send-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* Message styles */
+.message {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.success {
+    color: rgb(52, 211, 153);
+}
+
+.error {
+    color: rgb(248, 113, 113);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: rgb(113, 113, 122);
+    font-size: 0.875rem;
+    margin-top: 2rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
