@@ -18,6 +18,12 @@
       "permissions": [
         "INTERNET"
       ]
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35acd161-59d4-4a02-926f-5cd48b934784"
+      }
+    },
+    "owner": "bunny777"
   }
 }
