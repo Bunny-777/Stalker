@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "LeetCode Stalker",
+    "slug": "leetcode-stalker",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0E17",
+    "splash": {
+      "backgroundColor": "#0B0E17",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.stalker.leetcode",
+      "permissions": [
+        "INTERNET"
+      ]
+    }
+  }
+}

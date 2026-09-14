@@ -1,0 +1,101 @@
+{
+  "targets": [
+    {
+      "id": "target_1789425754117_5xh91",
+      "username": "bunny777",
+      "realName": "Bunny",
+      "avatar": "https://assets.leetcode.com/users/bunny777/avatar_1779608844.png",
+      "ranking": 35334,
+      "stats": {
+        "totalSolved": 993,
+        "easySolved": 316,
+        "mediumSolved": 536,
+        "hardSolved": 141
+      },
+      "telegramChatId": "8920447223",
+      "enabled": true,
+      "lastCheckedAt": 1789426343261,
+      "lastSolvedAt": 1789426170000,
+      "knownSubmissionIds": [
+        "2141271408",
+        "2140364235",
+        "2139871272",
+        "2138806498",
+        "2137872597",
+        "2135895041",
+        "2135571682",
+        "2134296081",
+        "2132553937",
+        "2131274189",
+        "2142037350",
+        "2142039077"
+      ],
+      "lastSubmission": {
+        "id": "2142039077",
+        "title": "Optimal Division",
+        "titleSlug": "optimal-division",
+        "timestamp": 1789426170,
+        "problemUrl": "https://leetcode.com/problems/optimal-division/"
+      },
+      "createdAt": 1789425754117,
+      "updatedAt": 1789426343261
+    }
+  ],
+  "history": [
+    {
+      "id": "hist_1789425861913_hvgh0",
+      "timestamp": 1789425861913,
+      "targetId": "target_1789425754117_5xh91",
+      "username": "bunny777",
+      "realName": "Bunny",
+      "submission": {
+        "id": "2142037350",
+        "title": "Rectangle Area",
+        "titleSlug": "rectangle-area",
+        "timestamp": 1789425811,
+        "problemUrl": "https://leetcode.com/problems/rectangle-area/",
+        "difficulty": "Medium",
+        "tags": [
+          "Math",
+          "Geometry"
+        ]
+      },
+      "stats": {
+        "totalSolved": 992,
+        "easySolved": 316,
+        "mediumSolved": 535,
+        "hardSolved": 141
+      }
+    },
+    {
+      "id": "hist_1789426224555_bfr36",
+      "timestamp": 1789426224555,
+      "targetId": "target_1789425754117_5xh91",
+      "username": "bunny777",
+      "realName": "Bunny",
+      "submission": {
+        "id": "2142039077",
+        "title": "Optimal Division",
+        "titleSlug": "optimal-division",
+        "timestamp": 1789426170,
+        "problemUrl": "https://leetcode.com/problems/optimal-division/",
+        "difficulty": "Medium",
+        "tags": [
+          "Array",
+          "Math",
+          "Dynamic Programming"
+        ]
+      },
+      "stats": {
+        "totalSolved": 993,
+        "easySolved": 316,
+        "mediumSolved": 536,
+        "hardSolved": 141
+      }
+    }
+  ],
+  "settings": {
+    "defaultChatId": "8920447223",
+    "pollIntervalSeconds": 60
+  }
+}

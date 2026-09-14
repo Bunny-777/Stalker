@@ -1,25 +1,23 @@
 {
-  "name": "new-folder",
-  "version": "1.0.0",
-  "description": "A Node.js application that tracks LeetCode performance and sends updates via Telegram.",
-  "main": "app.js",
+  "name": "leetcode-stalker",
+  "version": "2.0.0",
+  "description": "LeetCode real-time submission tracker with Telegram alerts, Node.js backend, and React Native Android app.",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "backend:dev": "npm --prefix backend run dev",
+    "backend:start": "npm --prefix backend start",
+    "mobile:web": "npm --prefix mobile run web",
+    "mobile:android": "npm --prefix mobile run android",
+    "mobile:start": "npm --prefix mobile start"
   },
   "keywords": [
     "leetcode",
     "tracker",
     "telegram",
     "bot",
+    "react-native",
+    "android",
     "express"
   ],
-  "author": "Your Name",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "node-telegram-bot-api": "^0.66.0"
-  }
+  "author": "Kushal",
+  "license": "MIT"
 }

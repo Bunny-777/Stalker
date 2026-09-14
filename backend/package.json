@@ -1,0 +1,29 @@
+{
+  "name": "leetcode-stalker-backend",
+  "version": "2.0.0",
+  "description": "Production Node.js backend for tracking LeetCode profiles and sending Telegram notifications",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node src/tests/test_leetcode.js"
+  },
+  "keywords": [
+    "leetcode",
+    "tracker",
+    "telegram",
+    "bot",
+    "express",
+    "graphql",
+    "stalker"
+  ],
+  "author": "Kushal",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
