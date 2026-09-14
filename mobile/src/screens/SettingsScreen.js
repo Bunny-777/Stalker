@@ -14,8 +14,8 @@ import { colors } from '../theme/colors';
 import api from '../api/client';
 
 export default function SettingsScreen() {
-  const [apiUrl, setApiUrl] = useState('');
-  const [defaultChatId, setDefaultChatId] = useState('');
+  const [apiUrl, setApiUrl] = useState('https://backend-stalker.onrender.com');
+  const [defaultChatId, setDefaultChatId] = useState('8920447223');
   const [pollInterval, setPollInterval] = useState('60');
   const [isTestingApi, setIsTestingApi] = useState(false);
   const [isTestingTelegram, setIsTestingTelegram] = useState(false);
@@ -29,7 +29,7 @@ export default function SettingsScreen() {
   const loadSettings = async () => {
     try {
       const currentUrl = await api.getBaseUrl();
-      setApiUrl(currentUrl);
+      if (currentUrl) setApiUrl(currentUrl);
 
       const statusResp = await api.getTelegramStatus().catch(() => null);
       if (statusResp && statusResp.success) {
@@ -137,6 +137,13 @@ export default function SettingsScreen() {
 
           {/* Preset Buttons */}
           <View style={styles.presetRow}>
+            <TouchableOpacity 
+              style={styles.presetBtn} 
+              onPress={() => setApiUrl('https://backend-stalker.onrender.com')}
+            >
+              <Text style={styles.presetText}>☁️ Cloud (Render)</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity 
               style={styles.presetBtn} 
               onPress={() => setApiUrl('http://10.0.2.2:5000')}

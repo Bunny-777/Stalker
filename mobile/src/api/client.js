@@ -3,11 +3,9 @@ import { Platform } from 'react-native';
 
 const STORAGE_KEY_BASE_URL = '@stalker_api_base_url';
 
-// Default host based on environment
-// For Android emulator, 10.0.2.2 maps to host machine localhost:5000
-const DEFAULT_URL = Platform.OS === 'android' 
-  ? 'http://10.0.2.2:5000' 
-  : 'http://localhost:5000';
+// Production cloud backend hosted on Render
+const DEFAULT_URL = 'https://backend-stalker.onrender.com';
+
 
 class ApiClient {
   constructor() {

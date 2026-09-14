@@ -7,7 +7,8 @@
     "backend:start": "npm --prefix backend start",
     "mobile:web": "npm --prefix mobile run web",
     "mobile:android": "npm --prefix mobile run android",
-    "mobile:start": "npm --prefix mobile start"
+    "mobile:start": "npm --prefix mobile start",
+    "mobile:build": "cd mobile && npx eas build -p android --profile preview"
   },
   "keywords": [
     "leetcode",
