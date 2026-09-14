@@ -8,8 +8,10 @@ import {
   Alert, 
   ScrollView, 
   ActivityIndicator, 
-  Linking 
+  Linking,
+  Platform
 } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import { colors } from '../theme/colors';
 import api from '../api/client';
 
@@ -95,6 +97,20 @@ export default function SettingsScreen() {
     }
   };
 
+  const handlePasteChatId = async () => {
+    try {
+      if (Platform.OS === 'web' && typeof navigator !== 'undefined' && navigator.clipboard) {
+        const text = await navigator.clipboard.readText();
+        if (text) setDefaultChatId(text.trim());
+      } else if (Clipboard && typeof Clipboard.getStringAsync === 'function') {
+        const text = await Clipboard.getStringAsync();
+        if (text) setDefaultChatId(text.trim());
+      }
+    } catch (err) {
+      console.warn('Clipboard read error:', err);
+    }
+  };
+
   const handleTestTelegram = async () => {
     setIsTestingTelegram(true);
     try {
@@ -122,14 +138,14 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>🌐 Backend Server URL</Text>
           <Text style={styles.cardDesc}>
-            Enter your running backend host address. If using Android Emulator, use 10.0.2.2:5000.
+            Connected 24/7 cloud backend hosted on Render.
           </Text>
 
           <TextInput
             style={styles.input}
             value={apiUrl}
             onChangeText={setApiUrl}
-            placeholder="http://10.0.2.2:5000 or https://your-app.onrender.com"
+            placeholder="https://backend-stalker.onrender.com"
             placeholderTextColor={colors.textMuted}
             autoCapitalize="none"
             autoCorrect={false}
@@ -180,26 +196,31 @@ export default function SettingsScreen() {
 
         {/* 2. Telegram Bot Configuration */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>🤖 Telegram Bot Integration</Text>
+          <Text style={styles.cardTitle}>🤖 Telegram Notification Target</Text>
           
           {botStatus && (
             <View style={styles.statusBox}>
               <Text style={styles.statusLabel}>Bot Status:</Text>
               <Text style={[styles.statusVal, { color: botStatus.isConfigured ? colors.easy : colors.warning }]}>
-                {botStatus.isConfigured ? 'Token Configured ✅' : 'Token Missing in .env ⚠️'}
+                {botStatus.isConfigured ? 'Bot Online & Ready ✅' : 'Token Missing ⚠️'}
               </Text>
             </View>
           )}
 
-          <Text style={styles.inputLabel}>Default Telegram Chat ID</Text>
-          <TextInput
-            style={styles.input}
-            value={defaultChatId}
-            onChangeText={setDefaultChatId}
-            placeholder="e.g. 6344734804"
-            placeholderTextColor={colors.textMuted}
-            keyboardType="numeric"
-          />
+          <Text style={styles.inputLabel}>Your Telegram Chat ID</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.textInputWithBtn}
+              value={defaultChatId}
+              onChangeText={setDefaultChatId}
+              placeholder="e.g. 8920447223"
+              placeholderTextColor={colors.textMuted}
+              keyboardType="numeric"
+            />
+            <TouchableOpacity style={styles.pasteBtn} onPress={handlePasteChatId} activeOpacity={0.7}>
+              <Text style={styles.pasteBtnText}>📋 Paste</Text>
+            </TouchableOpacity>
+          </View>
 
           <Text style={styles.inputLabel}>Background Polling Interval (Seconds)</Text>
           <TextInput
@@ -238,36 +259,53 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        {/* 3. Step-by-Step Telegram Setup Guide */}
+        {/* 3. Step-by-Step Telegram Setup Guide with 1-Click Redirects */}
         <View style={styles.guideCard}>
-          <Text style={styles.guideTitle}>📖 How to Setup Telegram Bot</Text>
+          <Text style={styles.guideTitle}>📖 2-Step Telegram Setup</Text>
           
+          {/* Step 1 */}
           <View style={styles.stepItem}>
             <Text style={styles.stepNum}>1</Text>
             <View style={styles.stepContent}>
-              <Text style={styles.stepHeader}>Create Bot with @BotFather</Text>
+              <Text style={styles.stepHeader}>Start the Stalker Bot</Text>
               <Text style={styles.stepDesc}>
-                Open Telegram, search for <Text style={styles.highlight}>@BotFather</Text>, send <Text style={styles.code}>/newbot</Text>, name your bot, and copy the API Token. Paste it into your backend <Text style={styles.code}>.env</Text> file.
+                Open our Telegram bot and press <Text style={styles.code}>/start</Text> so it has permission to send you alerts.
               </Text>
+              <TouchableOpacity 
+                style={styles.redirectBtn}
+                onPress={() => Linking.openURL('https://t.me/Telestalker_leetcode_bot')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.redirectBtnText}>🚀 Open @Telestalker_leetcode_bot ↗</Text>
+              </TouchableOpacity>
             </View>
           </View>
 
+          {/* Step 2 */}
           <View style={styles.stepItem}>
             <Text style={styles.stepNum}>2</Text>
             <View style={styles.stepContent}>
-              <Text style={styles.stepHeader}>Find Your Telegram Chat ID</Text>
+              <Text style={styles.stepHeader}>Get Your Chat ID</Text>
               <Text style={styles.stepDesc}>
-                Search for <Text style={styles.highlight}>@userinfobot</Text> in Telegram and message it, or open your newly created bot and press <Text style={styles.code}>/start</Text>. Enter that ID into the Chat ID box above.
+                Open <Text style={styles.highlight}>@userinfobot</Text> in Telegram (or send <Text style={styles.code}>/myid</Text> to our bot). Copy your numeric ID, then tap <Text style={styles.code}>📋 Paste</Text> above!
               </Text>
+              <TouchableOpacity 
+                style={styles.redirectBtnSecondary}
+                onPress={() => Linking.openURL('https://t.me/userinfobot')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.redirectBtnTextSecondary}>🆔 Open @userinfobot to Get ID ↗</Text>
+              </TouchableOpacity>
             </View>
           </View>
 
+          {/* Step 3 */}
           <View style={styles.stepItem}>
             <Text style={styles.stepNum}>3</Text>
             <View style={styles.stepContent}>
-              <Text style={styles.stepHeader}>Test & Receive Alerts</Text>
+              <Text style={styles.stepHeader}>Test Notification</Text>
               <Text style={styles.stepDesc}>
-                Tap "Send Test Alert" above to verify the connection. Whenever any tracked user submits a problem, you will receive instant notifications!
+                Tap <Text style={styles.highlight}>"Send Test Alert"</Text> above to verify. You are all set to receive live LeetCode notifications!
               </Text>
             </View>
           </View>
@@ -457,5 +495,64 @@ const styles = StyleSheet.create({
   code: {
     color: colors.accent,
     fontFamily: 'monospace',
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgDark,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: 12,
+    overflow: 'hidden',
+  },
+  textInputWithBtn: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    color: colors.textPrimary,
+    fontSize: 13,
+  },
+  pasteBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: 'rgba(255, 161, 22, 0.12)',
+    borderLeftWidth: 1,
+    borderLeftColor: colors.border,
+  },
+  pasteBtnText: {
+    color: colors.accent,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  redirectBtn: {
+    marginTop: 8,
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255, 161, 22, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 161, 22, 0.35)',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 8,
+  },
+  redirectBtnText: {
+    color: colors.accent,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  redirectBtnSecondary: {
+    marginTop: 8,
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(0, 229, 255, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 229, 255, 0.35)',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 8,
+  },
+  redirectBtnTextSecondary: {
+    color: colors.cyan,
+    fontSize: 12,
+    fontWeight: '700',
   }
 });
