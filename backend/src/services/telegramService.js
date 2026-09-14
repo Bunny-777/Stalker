@@ -211,10 +211,24 @@ ${profile.ranking ? `• 🏆 Global Rank: #${profile.ranking.toLocaleString()}`
    */
   async sendSubmissionAlert(target, submission, newStats) {
     const settings = storage.getSettings();
-    const chatId = target.telegramChatId || settings.defaultChatId || config.telegramDefaultChatId;
+    
+    // Collect all recipient Chat IDs (target-specific IDs + fallback default ID)
+    let chatIds = [];
+    if (Array.isArray(target.telegramChatIds) && target.telegramChatIds.length > 0) {
+      chatIds = target.telegramChatIds;
+    } else if (target.telegramChatId) {
+      chatIds = [target.telegramChatId];
+    } else if (settings.defaultChatId) {
+      chatIds = [settings.defaultChatId];
+    } else if (config.telegramDefaultChatId) {
+      chatIds = [config.telegramDefaultChatId];
+    }
 
-    if (!chatId) {
-      console.warn(`[Telegram] No chat ID configured for target @${target.username} or in settings. Alert skipped.`);
+    // Filter and deduplicate valid chat IDs
+    chatIds = Array.from(new Set(chatIds.filter(Boolean).map(id => String(id).trim())));
+
+    if (chatIds.length === 0) {
+      console.warn(`[Telegram] No chat ID configured for target @${target.username}. Alert skipped.`);
       return false;
     }
 
@@ -249,7 +263,18 @@ ${profile.ranking ? `• 🏆 Global Rank: #${profile.ranking.toLocaleString()}`
 <i>Keep the grind going! 🚀</i>
     `.trim();
 
-    return this.sendMessage(chatId, message, { parse_mode: 'HTML', disable_web_page_preview: false });
+    // Deliver notification to every subscriber of this target
+    let sentCount = 0;
+    for (const chatId of chatIds) {
+      try {
+        await this.sendMessage(chatId, message, { parse_mode: 'HTML', disable_web_page_preview: false });
+        sentCount++;
+      } catch (err) {
+        console.error(`[Telegram] Failed to deliver alert to Chat ID ${chatId}:`, err.message);
+      }
+    }
+
+    return sentCount > 0;
   }
 
   /**

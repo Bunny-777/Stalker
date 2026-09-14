@@ -63,7 +63,7 @@ Open [backend/.env](file:///c:/Users/kusha/Desktop/stalker/Stalker/backend/.env)
 ```env
 PORT=5000
 TELEGRAM_BOT_TOKEN=7123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ
-TELEGRAM_DEFAULT_CHAT_ID=6344734804
+TELEGRAM_DEFAULT_CHAT_ID=XXXXXXXXX
 POLL_INTERVAL_SECONDS=60
 DATA_FILE_PATH=./data/stalker_data.json
 ENABLE_TELEGRAM_POLLING=true
@@ -115,24 +115,6 @@ npm start
 
 ---
 
-## ☁️ 4. Hosting the Backend on Cloud (Free)
-
-### Option A: Render (Recommended)
-1. Push this repository to your GitHub account.
-2. Log into [Render.com](https://render.com) and click **New +** -> **Blueprint**.
-3. Select this repo (it will automatically detect [backend/render.yaml](file:///c:/Users/kusha/Desktop/stalker/Stalker/backend/render.yaml)).
-4. Add your `TELEGRAM_BOT_TOKEN` and `TELEGRAM_DEFAULT_CHAT_ID` environment variables in the Render dashboard.
-5. Render will deploy your backend on a free public HTTPS URL!
-
-### Option B: Docker / VPS / Railway / Fly.io
-Use the included [backend/Dockerfile](file:///c:/Users/kusha/Desktop/stalker/Stalker/backend/Dockerfile):
-
-```bash
-docker build -t leetcode-stalker backend/
-docker run -d -p 5000:5000 --env-file backend/.env leetcode-stalker
-```
-
----
 
 ## 💡 Telegram Bot Commands
 

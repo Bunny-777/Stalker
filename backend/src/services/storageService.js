@@ -77,6 +77,11 @@ class StorageService {
     );
 
     const now = Date.now();
+    let initialChatIds = [];
+    if (target.telegramChatId) initialChatIds.push(String(target.telegramChatId).trim());
+    if (Array.isArray(target.telegramChatIds)) initialChatIds.push(...target.telegramChatIds.map(id => String(id).trim()));
+    initialChatIds = Array.from(new Set(initialChatIds.filter(Boolean)));
+
     const newTarget = {
       id: target.id || `target_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       username: target.username,
@@ -84,7 +89,8 @@ class StorageService {
       avatar: target.avatar || 'https://assets.leetcode.com/users/default_avatar.jpg',
       ranking: target.ranking || null,
       stats: target.stats || { totalSolved: 0, easySolved: 0, mediumSolved: 0, hardSolved: 0 },
-      telegramChatId: target.telegramChatId || '',
+      telegramChatId: initialChatIds[0] || '',
+      telegramChatIds: initialChatIds,
       enabled: target.enabled !== undefined ? target.enabled : true,
       lastCheckedAt: now,
       lastSolvedAt: target.lastSolvedAt || (target.recentSubmissions?.[0]?.timestamp ? target.recentSubmissions[0].timestamp * 1000 : now),
@@ -95,11 +101,19 @@ class StorageService {
     };
 
     if (existingIndex >= 0) {
+      const existing = this.data.targets[existingIndex];
+      const mergedChatIds = Array.from(new Set([
+        ...(existing.telegramChatIds || (existing.telegramChatId ? [existing.telegramChatId] : [])),
+        ...initialChatIds
+      ])).filter(Boolean);
+
       this.data.targets[existingIndex] = {
-        ...this.data.targets[existingIndex],
+        ...existing,
         ...newTarget,
-        id: this.data.targets[existingIndex].id,
-        createdAt: this.data.targets[existingIndex].createdAt,
+        telegramChatId: mergedChatIds[0] || '',
+        telegramChatIds: mergedChatIds,
+        id: existing.id,
+        createdAt: existing.createdAt,
         updatedAt: now
       };
       this.save();
