@@ -62,7 +62,7 @@ Open [backend/.env](file:///c:/Users/kusha/Desktop/stalker/Stalker/backend/.env)
 
 ```env
 PORT=5000
-TELEGRAM_BOT_TOKEN=7123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ
+TELEGRAM_BOT_TOKEN=7123456789:XXXXXXXXXXXXXX
 TELEGRAM_DEFAULT_CHAT_ID=XXXXXXXXX
 POLL_INTERVAL_SECONDS=60
 DATA_FILE_PATH=./data/stalker_data.json
